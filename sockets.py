@@ -24,6 +24,17 @@ s.connect((args.host, 80))
 
 request = f"{args.verb.upper()} "
 
+def ifcontenttype():
+    global content_type_exists
+    content_type_exists = False
+
+    if args.anyheader:
+        for header in args.anyheader:
+            if "Content-Type:" in header:
+                content_type_exists = True
+                break
+    return  content_type_exists         
+
 if args.path:
     request += args.path.replace(" ", "%20")
 
@@ -50,22 +61,22 @@ body = ""
 
 if args.json:
     body = args.json
-    if not args.contenttype:
+    if not ifcontenttype():
         request += "Content-Type: application/json\r\n"
 
 if args.form:
     body = args.form
-    if not args.contenttype:
+    if not ifcontenttype():
         request += "Content-Type: application/x-www-form-urlencoded\r\n"
 
 if args.xml:
     body = args.xml
-    if not args.contenttype:
+    if not ifcontenttype():
         request += "Content-Type: application/xml\r\n"
 
 if args.raw:
     body = args.raw
-    if not args.contenttype:
+    if not ifcontenttype():
         request += "Content-Type: text/plain\r\n"
 
 if body:
