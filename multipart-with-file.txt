@@ -1,0 +1,8 @@
+cat > corpo.txt <<EOF
+--meu_boundary
+Content-Disposition: form-data; name="filename"; filename="../arquivo.txt"
+Content-Type: application/octet-stream
+
+A
+--meu_boundary--
+EOF

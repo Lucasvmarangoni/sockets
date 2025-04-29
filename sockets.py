@@ -33,7 +33,7 @@ def ifcontenttype():
             if "Content-Type:" in header:
                 content_type_exists = True
                 break
-    return  content_type_exists         
+    return  content_type_exists
 
 if args.path:
     request += args.path.replace(" ", "%20")
@@ -103,3 +103,4 @@ s.close()
 print(response.decode())
 
 # python3 sockets.py -H ptl-0d282d11-8e71e5a5.libcurl.so -p /pentesterlab -c key=please
+# multipart with file: python3 sockets.py -V post -H ptl-ebb6e78e-6df06d4b.libcurl.so -p /pentesterlab -ah "Content-Type: multipart/form-data; boundary=meu_boundary" --raw "$(cat multipart-with-file.txt)"
