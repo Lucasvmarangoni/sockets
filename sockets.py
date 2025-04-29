@@ -21,7 +21,12 @@ args = parser.parse_args()
 s = socket.socket()
 s.connect((args.host, 80))
 
-request = f"{args.verb.upper()} {args.path} HTTP/1.1\r\n"
+request = f"{args.verb.upper()} "
+
+if args.path:
+    request += args.path.replace(" ", "%20")
+
+request += " HTTP/1.1\r\n"
 request += f"Host: {args.host}\r\n"
 
 if args.cookie:
