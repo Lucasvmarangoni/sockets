@@ -9,6 +9,8 @@ parser.add_argument("-c", "--cookie", help="Cookie (ex: key=please)")
 parser.add_argument("-ct", "--contenttype", help="Content-Type (ex: key/please)")
 parser.add_argument("-ua", "--useragent", help="User-Agent")
 parser.add_argument("-al", "--acceptlanguage", help="Accept-Language (ex: key-please)")
+parser.add_argument("-ah", "--anyheader", help="Add a custom header (ex: X-HTTP-Method-Override: HACK)")
+
 
 body_group = parser.add_mutually_exclusive_group()
 body_group.add_argument("-bj", "--json", help="JSON Body (ex: '{\"key\": \"value\"}')")
@@ -40,6 +42,9 @@ if args.useragent:
 
 if args.acceptlanguage:
     request += f"Accept-Language: {args.acceptlanguage}\r\n"
+
+if args.anyheader:
+    request += f"{args.anyheader}\r\n"
 
 body = ""
 
