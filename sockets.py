@@ -4,7 +4,7 @@ import argparse
 parser = argparse.ArgumentParser(description="HTTP client")
 parser.add_argument("-V", "--verb", required=True, help="HTTP Verb (ex: post)")
 parser.add_argument("-H", "--host", required=True, help="Hostname (ex: ptl-xxxxx.libcurl.so)")
-parser.add_argument("-p", "--path", required=True, help="Path com querystring (ex: /pentesterlab?key=please)")
+parser.add_argument("-p", "--path", help="Path com querystring (ex: /pentesterlab?key=please)")
 parser.add_argument("-c", "--cookie", help="Cookie (ex: key=please)")
 parser.add_argument("-ct", "--contenttype", help="Content-Type (ex: key/please)")
 parser.add_argument("-ua", "--useragent", help="User-Agent")
@@ -14,7 +14,7 @@ body_group = parser.add_mutually_exclusive_group()
 body_group.add_argument("-bj", "--json", help="JSON Body (ex: '{\"key\": \"value\"}')")
 body_group.add_argument("-bf", "--form", help="form-urlencoded Body (ex: key=value)")
 body_group.add_argument("-bx", "--xml", help="XML Body (ex: '<key>value</key>')")
-body_group.add_argument("-bu", "--raw", help="Raw Body (text/plain)")
+body_group.add_argument("-br", "--raw", help="Raw Body (text/plain)")
 
 args = parser.parse_args()
 
@@ -40,24 +40,26 @@ body = ""
 
 if args.json:
     body = args.json
-    request += "Content-Type: application/json\r\n"
-    request += f"Content-Length: {len(body.encode())}\r\n"
+    if not args.contenttype:
+        request += "Content-Type: application/json\r\n"
 
 if args.form:
     body = args.form
-    request += "Content-Type: application/x-www-form-urlencoded\r\n"
-    request += f"Content-Length: {len(body.encode())}\r\n"
+    if not args.contenttype:
+        request += "Content-Type: application/x-www-form-urlencoded\r\n"
 
 if args.xml:
     body = args.xml
-    request += "Content-Type: application/xml\r\n"
-    request += f"Content-Length: {len(body.encode())}\r\n"
+    if not args.contenttype:
+        request += "Content-Type: application/xml\r\n"
 
 if args.raw:
     body = args.raw
-    request += "Content-Type: text/plain\r\n"
-    request += f"Content-Length: {len(body.encode())}\r\n"
+    if not args.contenttype:
+        request += "Content-Type: text/plain\r\n"
 
+if body:
+    request += f"Content-Length: {len(body.encode())}\r\n"
 
 request += "Connection: close\r\n"
 
