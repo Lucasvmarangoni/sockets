@@ -15,6 +15,7 @@ body_group = parser.add_mutually_exclusive_group()
 body_group.add_argument("-bj", "--json", help="JSON Body (ex: '{\"key\": \"value\"}')")
 body_group.add_argument("-bf", "--form", help="form-urlencoded Body (ex: key=value)")
 body_group.add_argument("-bx", "--xml", help="XML Body (ex: '<key>value</key>')")
+body_group.add_argument("-by", "--yaml", help="YAML Body (ex: ' key: please')")
 body_group.add_argument("-br", "--raw", help="Raw Body (text/plain)")
 
 args = parser.parse_args()
@@ -74,6 +75,11 @@ if args.xml:
     if not ifcontenttype():
         request += "Content-Type: application/xml\r\n"
 
+if args.yaml:
+    body = args.yaml
+    if not ifcontenttype():
+        request += "Content-Type: application/yaml\r\n"
+
 if args.raw:
     body = args.raw
     if not ifcontenttype():
@@ -102,5 +108,6 @@ while True:
 s.close()
 print(response.decode())
 
-# python3 sockets.py -H ptl-0d282d11-8e71e5a5.libcurl.so -p /pentesterlab -c key=please
+# python3 sockets.py -V post -H ptl-0d282d11-8e71e5a5.libcurl.so -p /pentesterlab -c key=please
 # multipart with file: python3 sockets.py -V post -H ptl-ebb6e78e-6df06d4b.libcurl.so -p /pentesterlab -ah "Content-Type: multipart/form-data; boundary=meu_boundary" --raw "$(cat multipart-with-file.txt)"
+# -bx '<key value="&quot;please"></key>'
