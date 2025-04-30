@@ -3,7 +3,7 @@
 This tool has been developed for the pentesterlab HTML Badge exercises.
 
 - My PentesterLab profile: <a href="https://pentesterlab.com/profile/lucasvm">lucasvm</a>
-- My Badge conclusion certificate: <a href="https://pentesterlab.com/certs/a56c7ef2466da26a8dc39626a4a5b6">HTTTP Badge</a>
+- My Badge conclusion certificate: <a href="https://pentesterlab.com/certs/a56c7ef2466da26a8dc39626a4a5b6">HTTP Badge</a>
 
 It is a Python command-line tool that manually establishes socket connections to send HTTP/HTTPS and WebSocket requests, offering full control over verbs, headers, authentication, and request bodies for penetration testing purposes.
 
